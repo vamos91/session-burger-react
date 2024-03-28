@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Burger from './Burger'
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App = () => {
+  const [burgerName, setBurgerName] = useState('')
+  const [sauce, setSauce] = useState([])
+  const burgerNames = ['Le new yorker', 'Le chicken', 'Le veggie']
+  const getInfoFromChild = (burger) => {
+    setBurgerName(burger)
+  }
+
+  const addSauce = (mySauce) => {
+    if (!sauce.includes(mySauce)) {
+      setSauce([...sauce, mySauce])
+    } 
+  }
+
+  return(
+   <div>
+      Vous avez commandé le burger: {burgerName}
+      <div>
+        <p>Choisissez votre sauce: {sauce.join(',')}</p>
+        <button onClick={() => addSauce('Ketchup')}>Ketchup</button>
+        <button onClick={() => addSauce('Mayo')}>Mayo</button>
+      </div>
+    <div className="burgers">
+        {
+          burgerNames.map((e) => (
+            <Burger burgerName={e} handleClickParent={getInfoFromChild}/>
+          ))
+        }
     </div>
-  );
+    </div>
+  )
 }
 
 export default App;
